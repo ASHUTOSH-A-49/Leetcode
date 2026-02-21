@@ -13,7 +13,7 @@ public:
         vector<int> primes31 = {0,0,1,1,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0,1};
         int ans = 0;
         for(int i = left;i<=right;i++){
-            int sb = countSetBits(i);
+            int sb =__builtin_popcount(i);
             // cout<<sb<<endl;
             if(primes31[sb]) ans++;
         }
