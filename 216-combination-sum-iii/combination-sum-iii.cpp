@@ -10,12 +10,12 @@ public:
             return;
         }
         if(n<0) return;
-        for(int i= 1;i<10;i++){
-            if(i>prev){
-                elem.push_back(i);
+        for(int i= prev+1;i<10;i++){
+            if (i > n) break; // Pruning: no need to check larger numbers
+            elem.push_back(i);
             solve(elem,k-1,n-i,i);
             elem.pop_back();
-            }
+            
             
         }
     }
