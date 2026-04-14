@@ -12,7 +12,7 @@ vector<vector<string>> ans;
 void solve(string & s, vector<string> & str,int idx){
     if(idx==s.size()){
         ans.push_back(str);
-        cout<<1<<" ";
+        // cout<<1<<" ";
         return;
     }
     // i goes from idx to n each time on checking all possible splits 
