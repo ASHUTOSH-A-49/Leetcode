@@ -3,10 +3,22 @@ public:
     int maxDistance(vector<int>& colors) {
         int maxdist = 0;
         int n = colors.size();
-        for(int i = 0;i<n-1;i++){
-            for(int j = i+1;j<n;j++){
-                if(colors[i]==colors[j]) continue;
-                else maxdist = max(maxdist,j-i);
+        int l = 0,r = n-1;
+        while(l<r){
+            if(colors[l]==colors[r]){
+                r--;
+            }else{
+                maxdist = max(maxdist,r-l);
+                break;
+            }
+        }
+        l = 0,r = n-1;
+        while(l<r){
+            if(colors[l]==colors[r]){
+                l++;
+            }else{
+                maxdist = max(maxdist,r-l);
+                break;
             }
         }
         return maxdist;
