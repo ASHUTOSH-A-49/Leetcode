@@ -11,10 +11,10 @@ public:
         }
         if (nums[ind] >= prev) {
             elem.push_back(nums[ind]);
-            solve(nums, elem, nums[ind], ind + 1);
+            solve(nums, elem, nums[ind], ind + 1); //take
             elem.pop_back(); // Backtrack
         }
-        solve(nums, elem, prev, ind + 1);
+        solve(nums, elem, prev, ind + 1); //skip if prev>current and also it goes for not take case
     }
     vector<vector<int>> findSubsequences(vector<int>& nums) {
         int prev = nums[0];
