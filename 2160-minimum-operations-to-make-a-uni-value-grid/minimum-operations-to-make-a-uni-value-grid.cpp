@@ -13,6 +13,7 @@ public:
         int base_val = arr[0];
         for (int num : arr) {
             if (abs(num - base_val) % x != 0) {
+                // can take any value from arr as base val it will work to eliminte impos cases
                 return -1;
             }
         }
