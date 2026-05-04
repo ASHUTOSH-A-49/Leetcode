@@ -13,7 +13,7 @@ class Solution {
 public:
 // diameter = check for every node as a root and get dia for every node and then get max dia
 
-// O(N2) soln 
+// ********************O(N) soln *************************
 int ans = 0;
 int depth(TreeNode* Node){
     if (Node == NULL) return 0;
@@ -23,19 +23,19 @@ int depth(TreeNode* Node){
     return 1+ max(l,r);
 
 }
-int getDia(TreeNode* root){
-    int l,r;
-    (root->left==NULL)?(l = 0) : l = depth(root->left); 
-    (root->right==NULL)?(r = 0) : r = depth(root->right); 
-    return l+r;
-}
-void inorder(TreeNode * node){
-    if(node==NULL) return;
+// int getDia(TreeNode* root){
+//     int l,r;
+//     (root->left==NULL)?(l = 0) : l = depth(root->left); 
+//     (root->right==NULL)?(r = 0) : r = depth(root->right); 
+//     return l+r;
+// }
+// void inorder(TreeNode * node){
+//     if(node==NULL) return;
     
-    inorder(node->left);
-    ans = max(ans,getDia(node));
-    inorder(node->right);
-}
+//     inorder(node->left);
+//     ans = max(ans,getDia(node));
+//     inorder(node->right);
+// }
     int diameterOfBinaryTree(TreeNode* root) {
         // if(root->left==NULL && root->right==NULL) return 1;
         // if(root==NULL) return 0;
