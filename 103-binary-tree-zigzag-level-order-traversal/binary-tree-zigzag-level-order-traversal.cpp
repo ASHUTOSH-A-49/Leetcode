@@ -35,9 +35,7 @@ vector<vector<int>> ans;
         int n = ans.size();
         if(n>1){
             for(int i = 1;i<n;i+=2){
-                vector<int> v = ans[i];
-                reverse(v.begin(),v.end());
-                ans[i] = v;
+                reverse(ans[i].begin(),ans[i].end());
             }
         }
         return ans;
