@@ -16,16 +16,11 @@ public:
 // O(N2) soln 
 int ans = 0;
 int depth(TreeNode* Node){
-    if(Node->left==NULL && Node->right==NULL){
-        return 1;
-    }
-    if(Node->left==NULL){
-        return 1+depth(Node->right);
-    }
-    if(Node->right==NULL){
-        return 1+depth(Node->left);
-    }
-    return 1+ max(depth(Node->left),depth(Node->right));
+    if (Node == NULL) return 0;
+    int l = depth(Node->right);
+    int r = depth(Node->left);
+    ans = max(ans,l+r);
+    return 1+ max(l,r);
 
 }
 int getDia(TreeNode* root){
@@ -43,7 +38,8 @@ void inorder(TreeNode * node){
 }
     int diameterOfBinaryTree(TreeNode* root) {
         // if(root->left==NULL && root->right==NULL) return 1;
-        inorder(root);    
+        // if(root==NULL) return 0;
+        depth(root);    
         return ans;
     }
 };
