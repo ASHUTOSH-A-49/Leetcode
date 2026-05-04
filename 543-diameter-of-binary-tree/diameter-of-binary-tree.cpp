@@ -11,7 +11,9 @@
  */
 class Solution {
 public:
-// diameter = check for every node as a root
+// diameter = check for every node as a root and get dia for every node and then get max dia
+
+// O(N2) soln 
 int ans = 0;
 int depth(TreeNode* Node){
     if(Node->left==NULL && Node->right==NULL){
