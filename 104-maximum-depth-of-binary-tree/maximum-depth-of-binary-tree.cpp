@@ -11,27 +11,20 @@
  */
 class Solution {
 public:
-    vector<vector<int>> ans;
-void level(queue <TreeNode*> & q){
-    while(!q.empty()){
-        int n = q.size();
-        vector<int> level;
-        for(int i = 0;i<n;i++){
-            TreeNode *Node = q.front();
-            q.pop();
-            if(Node->left!=NULL) q.push(Node->left);
-            if(Node->right!=NULL) q.push(Node->right);
-            level.push_back(Node->val);
-        }
-        ans.push_back(level);
-        
+// RECURSIVE SOLN
+// height  = 1+ max (left sub tree height, right sub tree height);
+int maxH(TreeNode* root){
+    TreeNode* l,r;
+    if(root->left==NULL && root->right==NULL){
+        return 1;
     }
+    if(root->left==NULL) return 1+maxH(root->right);
+    if(root->right==NULL) return 1+maxH(root->left);
+    return 1+ max(maxH(root->left),maxH(root->right));
+
 }
     int maxDepth(TreeNode* root) {
-        queue<TreeNode*>q;
-        if(root==NULL) return ans.size();
-        q.push(root);
-        level(q);
-        return ans.size();
+        if(root==NULL) return 0;
+        return maxH(root);
     }
 };
