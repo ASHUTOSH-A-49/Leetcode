@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-// diameter = left deepest node height + right deepest node height 
+// diameter = check for every node as a root
 int ans = 0;
 int depth(TreeNode* Node){
     if(Node->left==NULL && Node->right==NULL){
