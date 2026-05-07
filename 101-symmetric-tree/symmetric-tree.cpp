@@ -11,6 +11,8 @@
  */
 class Solution {
 public:
+
+// iterative -level order solution with 2 vectors
 vector<vector<int>> nodes;
 void level(queue <TreeNode*> & q){
     while(!q.empty()){
