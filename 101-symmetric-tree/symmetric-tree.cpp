@@ -12,7 +12,7 @@
 class Solution {
 public:
 
-// iterative -level order solution with 2 vectors
+// recursive solution simultaneous movement to simulate mirror
 bool solve(TreeNode* p,TreeNode*q ){
     if(p==NULL && q==NULL) return true;
     if(p==NULL || q==NULL) return false;
