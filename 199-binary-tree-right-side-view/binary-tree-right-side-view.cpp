@@ -11,6 +11,7 @@
  */
 class Solution {
 public:
+//recursive solution
 vector<int> ans;
 void solve(TreeNode* node,int level){
     if(node==NULL) return;
