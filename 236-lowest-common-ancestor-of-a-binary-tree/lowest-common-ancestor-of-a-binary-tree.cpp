@@ -7,52 +7,24 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-class Solution {
+class Solution { 
 public:
-    // BRUTE FORCE 
-    void Genpath(vector<TreeNode*> & path,TreeNode* root, TreeNode * n,bool & found){
-        if(root==NULL || found) return;
-        path.push_back(root);
-        if(root->val==n->val){
-            found = true;
-            return;
-        }
-        Genpath(path, root->left,n,found);
-        if(found) return;
-        Genpath(path, root->right,n,found);
-        if(found) return;
-        path.pop_back();
-    }
+    //SPECIAL TRAVERSAL
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        //brute force
-        vector<TreeNode*> pathp,pathq;
-        bool check = false;
-        Genpath(pathp,root,p,check);
-        check = false;
-        Genpath(pathq,root,q,check);
-        for(TreeNode* i:pathp){
-            cout<<i->val<<" ";
+        if(root==NULL || root==p || root==q){
+            return root;
         }
-        cout<<endl;
-        for(TreeNode*  i:pathq){
-            cout<<i->val<<" ";
-        }
-        cout<<endl;
-        TreeNode* result = root;
-        int m = pathp.size();
-        int n = pathq.size();
-        int j = min(m,n);
-        for(int i = 0;i<j;i++){
-            TreeNode* np = pathp[i];
-            TreeNode* nq = pathq[i];
-            if(np->val==nq->val){
-                result = np;
-            }else{
-                break;
-            }
+        TreeNode* left = lowestCommonAncestor(root->left,p,q);
+        TreeNode* right = lowestCommonAncestor(root->right,p,q);
+
+        if(left==NULL){
+            return right;
+        }else if(right==NULL){
+            return left;
+        }else{
+            // both not null i.e. we got our ans i.e. LCA
+            return root;
         }
 
-        return result;
-        
     }
 };
