@@ -9,7 +9,7 @@
  */
 class Solution {
 public:
-    
+    // BRUTE FORCE 
     void Genpath(vector<TreeNode*> & path,TreeNode* root, TreeNode * n,bool & found){
         if(root==NULL || found) return;
         path.push_back(root);
