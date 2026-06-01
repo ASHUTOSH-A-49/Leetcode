@@ -64,42 +64,32 @@ public:
 //     }
 
     int widthOfBinaryTree(TreeNode* root) {
-        if (root == nullptr) return 0;
+        // MODIFIED INDEXING based SOLUTION:
 
-        int maxWidth = 0;
-        // Queue stores pairs of {TreeNode*, Position_Index}
-        queue<pair<TreeNode*, unsigned long long>> q; 
-        q.push({root, 0});
-
-        while (!q.empty()) {
-            int size = q.size();
-            unsigned long long levelMinIdx = q.front().second; // First node index in this level
-            unsigned long long firstIdx = 0, lastIdx = 0;
-            int validNodesCount = 0;
-            for (int i = 0; i < size; i++) {
-                // Normalize index to prevent integer overflow
-                unsigned long long currIdx = q.front().second - levelMinIdx;
+        if(!root) return 0;
+        int ans = 0;
+        queue<pair<TreeNode*,long long>> q;
+        q.push({root,0});
+        while(!q.empty()){
+            int siz = q.size();
+            int minid = q.front().second;
+            int first,last;
+            for(int i = 0;i<siz;i++){
+                long long cur = q.front().second-minid;
                 TreeNode* node = q.front().first;
                 q.pop();
-                // Track indices for width calculation
-                if (i == 0) firstIdx = currIdx;
-                if (i == size - 1) lastIdx = currIdx;
-                validNodesCount++;
-
-                if (node->left) {
-                    q.push({node->left, 2 * currIdx});
+                if(i==0) first = cur;
+                if(i==siz-1) last = cur;
+                if(node->left){
+                    q.push({node->left,cur*2+1});
                 }
-                if (node->right) {
-                    q.push({node->right, 2 * currIdx + 1});
+                if(node->right){
+                    q.push({node->right,cur*2+2});
                 }
+                
             }
-
-            if (validNodesCount >= 1) {
-                int currentWidth = lastIdx - firstIdx + 1;
-                maxWidth = max(maxWidth, currentWidth);
-            }
+            ans= max(ans,last-first+1);
         }
-
-        return maxWidth;
+        return ans;
     }
 };
