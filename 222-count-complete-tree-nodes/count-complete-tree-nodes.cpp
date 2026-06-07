@@ -11,32 +11,26 @@
  */
 class Solution {
 public:
-int h = 0;
-int leafs = 0;
-bool checkleaf = false;
-void solve(TreeNode* root,int level){
-    level++;
-    if(root==NULL) return;
-    if(root->left==NULL && root->right==NULL){
-        if(!checkleaf) h++;
-        checkleaf = true;
-        if(checkleaf && (level==h))leafs++;
+int getHeight(TreeNode* node) {
+    int height = 0;
+    while (node) {
+        height++;
+        node = node->left;
     }
-    if(!checkleaf) h++;
-    solve(root->left,level);
-    solve(root->right,level);
+    return height;
 }
     int countNodes(TreeNode* root) {
-        
-        solve(root,0);
-        cout<<h<<endl;
-        cout<<leafs<<endl;
-        int ans = 0;
-        if(h==0) return ans;
-        ans  = leafs;
-        for(int i = 0;i<h-1;i++){
-            ans+=(1<<i);
+        if(!root) return 0;
+        int lH = getHeight(root->left);
+        int rH = getHeight(root->right);
+
+        if(lH==rH){
+            return (1<<lH) + countNodes(root->right);
+            //BT is complete and all level filled complete
+        }else{
+            return (1<<rH) + countNodes(root->left);
+            // leftmost levels filled hence all filled completely till right height only 
         }
-        return ans;
+        return 1;
     }
 };
