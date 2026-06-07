@@ -11,15 +11,32 @@
  */
 class Solution {
 public:
-void solve(TreeNode* root,map<TreeNode*,int> & m){
+int h = 0;
+int leafs = 0;
+bool checkleaf = false;
+void solve(TreeNode* root,int level){
+    level++;
     if(root==NULL) return;
-    m[root]++;
-    solve(root->left,m);
-    solve(root->right,m);
+    if(root->left==NULL && root->right==NULL){
+        if(!checkleaf) h++;
+        checkleaf = true;
+        if(checkleaf && (level==h))leafs++;
+    }
+    if(!checkleaf) h++;
+    solve(root->left,level);
+    solve(root->right,level);
 }
     int countNodes(TreeNode* root) {
-        map<TreeNode*,int> m;
-        solve(root,m);
-        return (int)m.size();
+        
+        solve(root,0);
+        cout<<h<<endl;
+        cout<<leafs<<endl;
+        int ans = 0;
+        if(h==0) return ans;
+        ans  = leafs;
+        for(int i = 0;i<h-1;i++){
+            ans+=(1<<i);
+        }
+        return ans;
     }
 };
