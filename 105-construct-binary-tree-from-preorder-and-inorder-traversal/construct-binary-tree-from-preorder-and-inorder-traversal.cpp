@@ -11,15 +11,13 @@
  */
 class Solution {
 public:
+map<int,int> hash;
+//OPTIMISATION 1: use hashmap to reduce find time complexity
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        for(int i = 0;i<inorder.size();i++) hash[inorder[i]] = i;
         TreeNode* root = new TreeNode(preorder[0]); 
         if(preorder.size()==1) return root;
-        int ind = -1;
-        for(int i = 0;i<inorder.size();i++){
-            if(root->val == inorder[i]) {
-                ind = i;break;
-            }
-        }
+        int ind = hash[root->val];  //reduce TC from O(N2) to O(N)
         TreeNode *left = nullptr, *right = nullptr;
         if (ind > 0) {
             vector<int> LeftPre(preorder.begin() + 1, preorder.begin() + ind + 1);
