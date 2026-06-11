@@ -11,21 +11,21 @@
  */
 class Solution {
 public:
-void flatBT(TreeNode* root,TreeNode*&tail){
-    if(root==NULL) return;
-    TreeNode* leftNode = root->left;
-    TreeNode* rightNode = root->right;
-    if (tail != nullptr) {
-            tail->left = nullptr;
-            tail->right = root;
-    }
-    tail = root;
-    flatBT(leftNode,tail);
-    flatBT(rightNode,tail);
-}
+
     void flatten(TreeNode* root) {
-        if (root == nullptr) return;
-        TreeNode* tail = nullptr;
-        flatBT(root, tail);
+        //STACK APPROACH
+        stack<TreeNode*> st;
+        if(root){
+            st.push(root);
+            while(!st.empty()){
+                TreeNode* cur = st.top();st.pop();
+                if(cur->right) st.push(cur->right);
+                if(cur->left) st.push(cur->left);
+                if(!st.empty()) cur->right = st.top();
+                cur->left = nullptr;
+
+            }  
+        }
+        
     }
 };
