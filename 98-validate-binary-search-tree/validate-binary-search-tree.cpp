@@ -9,29 +9,22 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+ typedef long long ll;
 class Solution {
-//BRUTE FORCE
-int getMin(TreeNode* root){
-    while(root->left){
-        root=root->left;
-    }
-    return root->val;
-}
-int getMax(TreeNode* root){
-    while(root->right){
-        root=root->right;
-    }
-    return root->val;
-}
+    
+//RANGE BASED APPROACH
 public:
+bool checkBST(TreeNode* root,ll minr,ll maxr){
+    bool left = true,right = true;
+    if(root->right) right = checkBST(root->right,root->val,maxr);
+    if(root->left) left  = checkBST(root->left,minr,root->val);
+    if(root->val > minr && root->val <maxr && left && right) return true;
+    return false;
+}
     bool isValidBST(TreeNode* root) {
         if(!root) return true;
-        bool right = isValidBST(root->right);
-        bool left= isValidBST(root->left);
-        bool condn = true;
-        if(root->right) condn = condn & (getMin(root->right)>root->val);
-        if(root->left) condn = condn & (getMax(root->left)<root->val);
-
-        return (left && right && condn);
+        ll minr = (ll)INT_MIN -1 ,maxr = (ll)INT_MAX+1;
+        return checkBST(root,minr,maxr);
+        
     }
 };
