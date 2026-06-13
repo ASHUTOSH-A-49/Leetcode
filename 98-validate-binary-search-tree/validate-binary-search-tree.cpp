@@ -14,17 +14,14 @@ class Solution {
     
 //RANGE BASED APPROACH
 public:
-bool checkBST(TreeNode* root,ll minr,ll maxr){
-    bool left = true,right = true;
-    if(root->right) right = checkBST(root->right,root->val,maxr);
-    if(root->left) left  = checkBST(root->left,minr,root->val);
-    if(root->val > minr && root->val <maxr && left && right) return true;
-    return false;
-}
+bool checkBST(TreeNode* root, TreeNode* minNode, TreeNode* maxNode) {
+        if (!root) return true;
+        if ((minNode && root->val <= minNode->val) || (maxNode && root->val >= maxNode->val)) {
+            return false;
+        }
+        return checkBST(root->left, minNode, root) && checkBST(root->right, root, maxNode);
+    }
     bool isValidBST(TreeNode* root) {
-        if(!root) return true;
-        ll minr = (ll)INT_MIN -1 ,maxr = (ll)INT_MAX+1;
-        return checkBST(root,minr,maxr);
-        
+        return checkBST(root, nullptr, nullptr);
     }
 };
