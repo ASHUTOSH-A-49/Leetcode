@@ -10,27 +10,31 @@
  * };
  */
 class BSTIterator {
+    //STACK APPROACH TC: O(1), SC:O(H)
 public:
-    queue<int> q;
-    void getInorder(TreeNode* root){
-        if(!root) return;
-        getInorder(root->left);
-        q.push(root->val);
-        getInorder(root->right);
+    stack<TreeNode*> st;
+    void pushAllLeft(TreeNode* node) {
+        while (node != nullptr) {
+            st.push(node);
+            node = node->left;
+        }
     }
     BSTIterator(TreeNode* root) {
-        getInorder(root);
+        pushAllLeft(root);
     }
     
     int next() {
-        int ans = q.front();
-        q.pop();
-        return ans;
+        TreeNode* currNode = st.top();
+        st.pop();
+        if (currNode->right != nullptr) {
+            pushAllLeft(currNode->right);
+        }
         
+        return currNode->val;
     }
     
     bool hasNext() {
-        if(q.empty()) return false;
+        if(st.empty()) return false;
         else return true;
     }
 };
