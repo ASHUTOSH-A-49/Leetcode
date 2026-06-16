@@ -11,31 +11,34 @@
  */
 class Solution {
 public:
-//BRUTE - flatten into inorder vector and take 2 node pointers to get faulty nodes and swap
-void inorderTrav(TreeNode* root,vector<TreeNode*> & nodes){
+//BETTER - inorder recursive soln without extra vector space
+void inorderTrav(TreeNode* root,TreeNode* &prev,TreeNode* &first,TreeNode* &mid,TreeNode* &last){
     if(!root) return;
-    inorderTrav(root->left,nodes);
-    nodes.push_back(root);
-    inorderTrav(root->right,nodes);
-}
-    void recoverTree(TreeNode* root) {
-        vector<TreeNode*> nodes;
-        inorderTrav(root,nodes);
-        TreeNode* n1 = nullptr, *n2 = nullptr;
-        int ind = nodes.size()-1;
-        for(int i  = 0;i<ind;i++){
-            if(nodes[i]->val > nodes[i+1]->val){
-                if(n1==nullptr){
-                    n1 = nodes[i];
-                    n2 = nodes[i + 1]; 
-                }
-                else n2 = nodes[i+1];
+    inorderTrav(root->left,prev,first,mid,last);
+    if(prev){
+        if(root->val < prev->val){
+            if(!first && !mid){
+                first = prev;
+                mid = root;
+            }else{
+                last = root;
             }
         }
-        if (n1 && n2) {
-            int temp = n2->val;
-            n2->val = n1->val;
-            n1->val = temp;
+    }
+    prev = root;
+    inorderTrav(root->right,prev,first,mid,last);
+}
+    void recoverTree(TreeNode* root) {
+        TreeNode* first = nullptr,*mid = nullptr,*last = nullptr,*prev = nullptr;
+        inorderTrav(root,prev,first,mid,last);
+        if(last){
+            int temp = last->val;
+            last->val = first->val;
+            first->val = temp;
+        }else{
+            int temp = mid->val;
+            mid->val = first->val;
+            first->val = temp;
         }
 
     }
