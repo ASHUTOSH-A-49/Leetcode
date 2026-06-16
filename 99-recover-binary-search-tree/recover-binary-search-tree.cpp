@@ -11,6 +11,7 @@
  */
 class Solution {
 public:
+//BRUTE - flatten into inorder vector and take 2 node pointers to get faulty nodes and swap
 void inorderTrav(TreeNode* root,vector<TreeNode*> & nodes){
     if(!root) return;
     inorderTrav(root->left,nodes);
