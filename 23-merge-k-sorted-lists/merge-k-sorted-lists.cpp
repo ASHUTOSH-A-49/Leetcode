@@ -8,25 +8,35 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+
+ class compare{
+    public:
+    bool operator()(ListNode*a, ListNode*b){
+        return a->val>b->val;
+    }
+ };
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        priority_queue<int,vector<int>,greater<int>> minHeap;
+        if(lists.size()==0) return nullptr;
+        priority_queue<ListNode*,vector<ListNode*>,compare> minH;
         for(ListNode* l : lists){
-            while(l){
-                minHeap.push(l->val);
-                l = l->next;
-            }
+           if (l!=nullptr) minH.push(l);
         }
-        if(minHeap.empty()) return nullptr;
-        ListNode* root = new ListNode(minHeap.top());
-        ListNode* dummy = root;
-        minHeap.pop();
-        while(!minHeap.empty()){
-            ListNode* node = new ListNode(minHeap.top()) ;
-            minHeap.pop();
-            dummy->next = node;
-            dummy = node;
+        if(minH.empty()) return nullptr;
+        ListNode* root = nullptr;
+        ListNode* prev = nullptr;
+        while(!minH.empty()){
+            ListNode* tmp = minH.top();
+            if(!root) root = tmp;
+            if(prev) prev->next = tmp;
+            prev = tmp;
+            minH.pop();
+            if(tmp->next){
+                ListNode * nxt = tmp->next;
+                minH.push(nxt);
+            }
+            
         }
         return root;
     }
