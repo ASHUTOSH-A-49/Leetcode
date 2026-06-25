@@ -2,33 +2,19 @@ class Solution {
 public:
     bool isNStraightHand(vector<int>& hand, int groupSize) {
         int n= hand.size();
-        if(n%groupSize !=0) return false;
-        priority_queue<int,vector<int>,greater<int>> minH;
-        for(int i:hand) minH.push(i);
-
-        while(!minH.empty()){
-            vector<int> temp;
-            int prev = minH.top();
-            minH.pop();
-            int k = groupSize-1;
-            while(k>0){
-                if(minH.empty()) return false;
-                if(prev==minH.top()){
-                    temp.push_back(minH.top());
-                    minH.pop();
-                    
-                }else{
-                    if(minH.top()==prev+1){
-                        k--;
-                        prev = minH.top();
-                        minH.pop();
-                    }else{
-                        return false;
-                    }
+        map<int,int> grps; //ordered  = sorted map
+        for(int i:hand) grps[i]++;
+        while(!grps.empty()){
+            int strt = grps.begin()->first;
+            for (int i = 0; i < groupSize; i++) {
+                int curr =strt+i; //if next consec elem exist
+                if (grps.find(curr) == grps.end()) {
+                    return false;
                 }
-            }
-            for(int i:temp){
-                minH.push(i);
+                grps[curr]--;
+                if (grps[curr] == 0) {
+                    grps.erase(curr);
+                }
             }
         }
         return true;
