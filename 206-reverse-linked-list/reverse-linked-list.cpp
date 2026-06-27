@@ -9,19 +9,19 @@
  * };
  */
 class Solution {
-    // approach 1 create a ll and add at first always
+    // approach 2  - use 3 pointers
 public:
     ListNode* reverseList(ListNode* head) {
         if(!head) return head;
-        ListNode* tail = new ListNode(head->val);
-        tail->next = nullptr;
-        head= head->next;
-        while(head){
-            ListNode* tmp = new ListNode(head->val);
-            tmp->next = tail;
-            tail = tmp;
-            head = head->next;
+        ListNode * prev = nullptr, *curr = head, * next = curr->next;
+        while(next){
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+            next = next->next;
         }
-        return tail;
+        curr->next = prev;
+        return curr;
+
     }
 };
