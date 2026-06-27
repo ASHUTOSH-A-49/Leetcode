@@ -29,6 +29,8 @@ ListNode* revLL(ListNode*head){
 //         head = head->next;
 //     }
 // }
+
+//APPROACH -1 : make new ll which is rev of original LL and compare - SC - O(N)
     bool isPalindrome(ListNode* head) {
         if(!head) return true;
         ListNode* head2 = revLL(head);
