@@ -10,19 +10,7 @@
  */
 class Solution {
 public:
-ListNode* revLL(ListNode*head){
-    if(!head) return head;
-        ListNode* tail = new ListNode(head->val);
-        tail->next = nullptr;
-        head= head->next;
-        while(head){
-            ListNode* tmp = new ListNode(head->val);
-            tmp->next = tail;
-            tail = tmp;
-            head = head->next;
-        }
-        return tail;
-}
+
 // void printLL(ListNode* head){
 //     while(head){
 //         cout<<head->val<<" ";
@@ -30,15 +18,42 @@ ListNode* revLL(ListNode*head){
 //     }
 // }
 
-//APPROACH -1 : make new ll which is rev of original LL and compare - SC - O(N)
+ListNode* getMid(ListNode* head){
+    ListNode* slow  = head,* fast = head;
+        while(fast){
+            if(fast->next && fast->next->next){
+                slow = slow->next;
+                fast = fast->next->next;
+            }else break;  
+        }
+    return slow;
+}
+
+
+ListNode* revLL(ListNode* head){
+    if(!head) return head;
+        ListNode * prev = nullptr, *curr = head, * next = curr->next;
+        while(next){
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+            next = next->next;
+        }
+        curr->next = prev;
+        return curr;
+}
+
+//APPROACH -2 : rev one half of LL and compare with other (first get mid using slow and fast ptr)
     bool isPalindrome(ListNode* head) {
         if(!head) return true;
-        ListNode* head2 = revLL(head);
-        // printLL(head2);
-        while(head && head2){
-            if(head->val!=head2->val) return false;
-            head = head->next;
-            head2 = head2->next;
+        ListNode* mid = nullptr,* nxt = nullptr;
+        mid = getMid(head);
+        nxt = revLL(mid->next);
+        mid->next = nxt;
+        mid = mid->next;
+        while(mid){
+            if(head->val !=mid->val) return false;
+            head = head->next;mid = mid->next;
         }
         return true;
         
