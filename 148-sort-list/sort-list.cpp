@@ -17,7 +17,7 @@ class compare{
 };
 class Solution {
 public:
-    // approach 1 - priority queue with custom comparator
+    // approach 1 - priority queue with custom comparator TC - O(NlogN), SC-O(N);
     ListNode* sortList(ListNode* head) {
         if(!head) return head;
         priority_queue<ListNode*,vector<ListNode*>, compare> minH;
