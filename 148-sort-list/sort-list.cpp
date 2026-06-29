@@ -9,31 +9,22 @@
  * };
  */
 
-class compare{
-    public:
-    bool operator()(ListNode* a,ListNode* b){
-        return a->val > b->val;
-    }
-};
 class Solution {
 public:
-    // approach 1 - priority queue with custom comparator TC - O(NlogN), SC-O(N);
+    // approach 2-array then sort or set  TC - O(NlogN), SC-O(N);
     ListNode* sortList(ListNode* head) {
-        if(!head) return head;
-        priority_queue<ListNode*,vector<ListNode*>, compare> minH;
-        while(head){
-            minH.push(head);
-            head = head->next;
+        vector<int> arr;
+        ListNode*tmp1 = head,*tmp2 = head;
+        while(tmp1){
+            arr.push_back(tmp1->val);
+            tmp1= tmp1->next;
         }
-        ListNode* newHead = minH.top();
-        minH.pop();
-        ListNode* tmp = newHead;
-        while(minH.size()>0){
-            ListNode* nxt = minH.top();minH.pop();
-            tmp->next = nxt;
-            tmp = tmp->next;
+        sort(arr.begin(),arr.end());
+        int i = 0;
+        while(tmp2){
+            tmp2->val = arr[i++];
+            tmp2 = tmp2->next;
         }
-        tmp->next = nullptr;
-        return newHead;
+        return head;
     }
 };
