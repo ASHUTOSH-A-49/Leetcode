@@ -8,20 +8,16 @@
  */
 class Solution {
 public:
+//recursive soln;
+
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        map<ListNode*,int> hash;
-        ListNode* ans = nullptr;
-        while(headA){
-            hash[headA]++;
-            headA = headA->next;
+        if (!headA || !headB) return nullptr;
+        ListNode *ptrA = headA;
+        ListNode *ptrB = headB;
+        while (ptrA != ptrB) {
+            ptrA = (ptrA == nullptr) ? headB : ptrA->next;
+            ptrB = (ptrB == nullptr) ? headA : ptrB->next;
         }
-        while(headB){
-            hash[headB]++;
-            if(hash[headB]>1) {
-                return headB;
-            }
-            headB = headB->next;
-        }
-        return ans;
+        return ptrA;
     }
 };
