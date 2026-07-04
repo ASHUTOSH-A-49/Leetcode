@@ -8,32 +8,30 @@
  */
 class Solution {
 public:
-    bool hasCycle(ListNode *head) {
+//APPROACH 2: slow and fast 2 collision approach
+    ListNode* hasCycle(ListNode *head) {
         ListNode *slow = head,*fast = head;
 
         while(fast){
             if(fast->next){
                 slow = slow->next;
                 fast = fast->next->next;
-                if(slow==fast) return true;
+                if(slow==fast) return fast;
             }else break;
         }
-        return false;
+        return nullptr;
     }
     ListNode *detectCycle(ListNode *head) {
-        if(!hasCycle(head)) return nullptr;
-        map<ListNode*,int> hash;
-        ListNode* temp  = head;
-        ListNode* ans = new ListNode(-1);
-        while(true){
-            hash[temp]++;
-            if(hash[temp]>1) {
-                ans = temp;
-                break;
-            }
-            temp =temp->next;
+        ListNode* fast = hasCycle(head);
+        if(!fast) return nullptr;
+        //take one of pointer to head and move both pointer 1 step each
+        ListNode* slow  = head;
+        //2nd collision will always be at head
+        while(slow!=fast){
+            slow = slow->next;
+            fast = fast->next;
         }
-        return ans;
+        return slow;
 
     }
 };
