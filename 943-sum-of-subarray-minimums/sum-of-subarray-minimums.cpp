@@ -28,17 +28,24 @@ int MOD = 1e9 + 7;
         return NSE;
     }
     int sumSubarrayMins(vector<int>& arr) {
-        vector<pair<int,int>> PSE = getPSE(arr);
-        vector<pair<int,int>> NSE = getNSE(arr);
         int n = arr.size();
-        int ans = 0;
-        for(int i = 0; i < n; i++){
-            auto ps = PSE[i], ns = NSE[i];
-            long long l = i - ps.second; 
-            long long r = ns.second - i; 
-            long long sub = (l * r) % MOD; 
-            long long res = (sub * arr[i]) % MOD;
-            ans = (ans + res) % MOD;
+        int MOD = 1e9 + 7;
+        stack<int> st;
+        long long ans = 0;
+
+        for (int i = 0; i <= n; i++) {
+            while (!st.empty() && (i == n || arr[st.top()] >= arr[i])) {
+                int mid = st.top();
+                st.pop();
+                long long lb = st.empty() ? -1 : st.top();
+                long long rb = i;
+                long long l = mid - lb;
+                long long r = rb - mid;
+                long long sub = (l * r) % MOD;
+                long long res = (sub * arr[mid]) % MOD;
+                ans = (ans + res) % MOD;
+            }
+            st.push(i);
         }
         return ans;
     }
