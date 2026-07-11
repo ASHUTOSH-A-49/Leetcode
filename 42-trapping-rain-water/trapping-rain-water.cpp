@@ -1,21 +1,21 @@
 class Solution {
 public:
-    //APPROACH - 1 : using PREMAX AND SUFFMAX
+    //APPROACH - 2 : using lMax,rMax,l,r,and 2 traversal, SC - O(1)
     int trap(vector<int>& height) {
         int n  = height.size();
-        vector<int> preMax(n),SuffMax(n);
-        preMax[0] = height[0];
-        SuffMax[n-1] = height[n-1];
-        for(int i = 1;i<n;i++){
-            preMax[i] = max(preMax[i-1],height[i]);
-        }
-        for(int i = n-2;i>=0;i--){
-            SuffMax[i] = max(SuffMax[i+1],height[i]);
-        }
+        int l = 0,r = n-1,lmax = 0,rmax = 0;
         int ans=  0;
-        for(int i = 0;i<n;i++){
-            int num = height[i];
-            if(num<preMax[i] && num<SuffMax[i]) ans+=min(preMax[i],SuffMax[i])-num;
+        while(l<=r){
+            if(height[l]<lmax) ans+=lmax-height[l];
+            if(height[r]<rmax) ans+=rmax-height[r];
+            if(height[l] <= height[r]) {
+                lmax = max(lmax,height[l]);
+                l++;
+            }
+            else {
+                rmax = max(rmax,height[r]);
+                r--;
+            }
         }
         return ans;
     }
