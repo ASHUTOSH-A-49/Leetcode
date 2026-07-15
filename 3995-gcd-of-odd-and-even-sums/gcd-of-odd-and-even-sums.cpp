@@ -1,14 +1,12 @@
 class Solution {
 public:
+//approach -2: MATH AP formula
     int gcdOfOddEvenSums(int n) {
-        int sumo = 0,sume = 0;
-        int o = 1,e = 2;
-        for(int i = 0;i<n;i++){
-            sumo+=o;o+=2;
-        }
-        for(int i = 0;i<n;i++){
-            sume+=o;e+=2;
-        }
+        int sumo,sume;
+        int le = 2+(n-1)*2;
+        int lo = 1+(n-1)*2;
+        sume = n * (2+le)/2;
+        sumo = n * (1+lo)/2;
         return gcd(sumo,sume);
     }
 };
