@@ -1,5 +1,6 @@
 class Solution {
 public:
+//with visited SC = O(mXn)
 void DFS(vector<vector<char>> &grid,vector<vector<int>> &visited,int sr,int sc){
     if(sr>=grid.size() || sc>=grid[0].size()) return;
     if(visited[sr][sc]) return;
