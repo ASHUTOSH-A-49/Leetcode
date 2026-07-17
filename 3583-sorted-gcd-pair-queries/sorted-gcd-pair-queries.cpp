@@ -4,7 +4,7 @@ public:
     vector<int> gcdValues(vector<int>& nums, vector<long long>& queries) {
         int n  = nums.size();
         int maxi = *max_element(begin(nums),end(nums));
-
+        //inclusion exclusion principle
         vector<int> factFreq(maxi+1);
         for(int i = 0;i<n;i++){
             int num = nums[i];
@@ -28,7 +28,7 @@ public:
                 GCDpairs[f]-=GCDpairs[mul];
             }
         }
-
+        //sorted order of GCD
         vector<ll> preGcd(maxi+1,0);
         for(int f = 1;f<=maxi;f++){
             preGcd[f] = preGcd[f-1]+GCDpairs[f];
