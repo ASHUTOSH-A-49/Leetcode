@@ -1,46 +1,41 @@
 class Solution {
 public:
-    int BFS(vector<vector<int>> & grid,queue<pair<int,int>> q){
-        int t = 0;
-        int m = grid.size(),n = grid[0].size();
-        while(!q.empty()){
-            int s = q.size();
-            
-            bool rot = false;
-            for(int k = 0;k<s;k++){
-                auto p = q.front();
-                int i = p.first,j = p.second;
-                q.pop();
-                for(int r = -1;r<2;r++){
-                    for(int c = -1;c<2;c++){
-                        if((r==c) || (r==1&&c==-1) || (r==-1 && c==1)) continue;
-                        if(i+r<0 || j+c<0 || i+r>=m || j+c>=n) continue;
-                        if(grid[i+r][j+c]==1) {
-                            grid[i+r][j+c] = 2;
-                            q.push({i+r,j+c});
-                            rot = true;
-                        }
-                    }
-                }
-            }
-            if(rot) t++;
-        }
-        return t;
-    }
-    int orangesRotting(vector<vector<int>>& grid) {
-        int m = grid.size(),n = grid[0].size();
-        queue<pair<int,int>> q;
-        for(int i = 0;i<m;i++){
-            for(int j = 0;j<n;j++){
-                if(grid[i][j]==2) q.push({i,j});
-            }
-        }
-        int t =  BFS(grid,q);
-        for(int i = 0;i<m;i++){
-            for(int j = 0;j<n;j++){
-                if(grid[i][j]==1) return -1;
-            }
-        }
-        return t;
-    }
+    int BFS(vector<vector<int>> & grid, queue<pair<int,int>> & q, int fresh){ 
+        if (fresh == 0) return 0;
+        int m = grid.size(), n = grid[0].size(); 
+        int t = 0; 
+        int dirs[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        
+        while(!q.empty() && fresh > 0){ 
+            int s = q.size(); 
+            t++; 
+            for(int k = 0; k < s; k++){ 
+                auto [i, j] = q.front(); 
+                q.pop(); 
+                for(int d = 0; d < 4; d++){ 
+                    int r = i + dirs[d][0]; 
+                    int c = j + dirs[d][1]; 
+                    if(r >= 0 && c >= 0 && r < m && c < n && grid[r][c] == 1) { 
+                        grid[r][c] = 2; 
+                        q.push({r, c}); 
+                        fresh--; 
+                    } 
+                } 
+            } 
+        } 
+        return fresh == 0 ? t : -1; 
+    } 
+
+    int orangesRotting(vector<vector<int>>& grid) { 
+        int m = grid.size(), n = grid[0].size(); 
+        queue<pair<int,int>> q; 
+        int fresh = 0;
+        for(int i = 0; i < m; i++){ 
+            for(int j = 0; j < n; j++){ 
+                if(grid[i][j] == 2) q.push({i, j}); 
+                else if(grid[i][j] == 1) fresh++;
+            } 
+        } 
+        return BFS(grid, q, fresh); 
+    } 
 };
