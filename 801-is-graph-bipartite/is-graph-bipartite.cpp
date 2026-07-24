@@ -1,8 +1,7 @@
 class Solution {
 public:
-bool BFS(vector<vector<int>>&G,vector<int>&vis,vector<int>&col,int start){
+bool BFS(vector<vector<int>>&G,vector<int>&col,int start){
     queue<int>q;
-    vis[start]=1;
     q.push(start);
     col[start]=1;
     while(!q.empty()){
@@ -11,13 +10,12 @@ bool BFS(vector<vector<int>>&G,vector<int>&vis,vector<int>&col,int start){
             int n=q.front();q.pop();
             int currcol=col[n];
             for(int i:G[n]){
-                if(vis[i]){
+                if(col[i]!=-1){
                     if(col[i]==currcol)return false;
                     continue;
                 }
                 q.push(i);
                 col[i]=!currcol;
-                vis[i]=1;
             }
         }
     }
@@ -25,11 +23,11 @@ bool BFS(vector<vector<int>>&G,vector<int>&vis,vector<int>&col,int start){
 }
     bool isBipartite(vector<vector<int>>& graph) {
         int n=graph.size();
-    vector<int>colors(n,0);
-    vector<int>vis(n,0);
+    vector<int>colors(n,-1);
+    // vector<int>vis(n,0);
     for(int i=0;i<n;++i){
-        if(!vis[i]){
-            if(!BFS(graph,vis,colors,i))return false;
+        if(colors[i]==-1){
+            if(!BFS(graph,colors,i))return false;
         }
     }
     return true;
