@@ -7,7 +7,7 @@ public:
         int V = numCourses;
         vector<vector<int>> G(V);
         for(auto v:prerequisites){
-            G[v[0]].push_back(v[1]);
+            G[v[1]].push_back(v[0]);
         }
         vector<int> Indeg(V,0);
         for(auto v: G){
@@ -30,9 +30,8 @@ public:
             }
         }
         
-        // topo keeps least dependent at last ... acc to ques we need it at first so just reverse the topo obtained
+
         vector<int> ans;
-        reverse(topo.begin(),topo.end());
         return (topo.size()==V) ? topo : ans; 
     }
 };
