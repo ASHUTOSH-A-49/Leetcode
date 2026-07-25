@@ -1,5 +1,6 @@
 class Solution {
 public:
+// approach 1 - DFS TOPO SORT + cycle detection
 bool DFScycle(vector<vector<int>> & G,vector<int> & visited,vector<int> &pathvis,int node){
       visited[node] = 1;
       pathvis[node] = 1;
