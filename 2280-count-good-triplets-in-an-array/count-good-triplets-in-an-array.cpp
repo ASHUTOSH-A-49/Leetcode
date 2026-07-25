@@ -82,7 +82,7 @@ public:
         st.updateQuery(mp[nums1[0]],1);
         long long sum = 0;
         int n = nums1.size();
-        for(int i = 1;i<n;i++){
+        for(int i = 1;i<n-1;i++){
             int idx = mp[nums1[i]]; //idx of elem in nums2
             int leftcomm = st.getRangeSum(0,idx);
             int leftuncomm = i - leftcomm;
