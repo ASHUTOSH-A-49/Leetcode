@@ -30,8 +30,8 @@ public:
                 if(w[k]!=beginWord[k]) d++;
             }
             if(d==1){
-                dist[w] = 1;
-                q.push({w,1});
+                dist[w] = 2;
+                q.push({w,2});
             }
         }
 
@@ -40,11 +40,12 @@ public:
             q.pop();
             string root = p.first;
             int d = p.second;
-            if(root==endWord) return d+1;
+            if(root==endWord) return d;
             
             string temp = root;
             for(int i = 0;i<temp.size();i++){
                 char original = temp[i];
+                //all combination of letters from a-z to create the word in list
                 for(char c = 'a';c<='z';c++){
                     if(c==original) continue;
                     temp[i] = c;
