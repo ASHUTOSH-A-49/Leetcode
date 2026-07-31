@@ -31,7 +31,7 @@ private:
                     word[i] = originalChar;
                 }
             }
-            for(auto& w:visited_lev) dict.erase(w);
+            for(auto w:visited_lev) dict.erase(w);
             visited_lev.clear();
         }
     }
