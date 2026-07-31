@@ -11,7 +11,7 @@ public:
         }
         if(!check) return 0;
         
-        map<string,int> dist;
+        unordered_map<string,int> dist;
         for(auto w:wordList){
             dist[w] = INT_MAX;
         }
