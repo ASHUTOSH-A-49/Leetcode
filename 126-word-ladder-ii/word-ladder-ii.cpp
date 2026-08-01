@@ -1,5 +1,7 @@
 class Solution {
 private:
+
+// DFS APPROACH 
     void ladderLength(string beginWord, string endWord, vector<string>& wordList,unordered_map<string, int>& dist) {
         unordered_set<string> dict(wordList.begin(), wordList.end());
         if (dict.find(endWord) == dict.end()) return;
