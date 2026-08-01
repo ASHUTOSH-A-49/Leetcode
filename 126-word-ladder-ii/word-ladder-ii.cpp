@@ -1,15 +1,12 @@
 class Solution {
 private:
-
-// DFS APPROACH 
-    void ladderLength(string beginWord, string endWord, vector<string>& wordList,unordered_map<string, int>& dist) {
+    void ladderLength(string beginWord, string endWord, vector<string>& wordList, unordered_map<string, int>& dist) {
         unordered_set<string> dict(wordList.begin(), wordList.end());
         if (dict.find(endWord) == dict.end()) return;
         queue<string> q;
         q.push(beginWord);
         dist[beginWord] = 1;
         dict.erase(beginWord);
-        unordered_set<string> visited_lev;
         while (!q.empty()) {
             int level_size = q.size();
             for(int j=0;j<level_size;j++){
@@ -26,20 +23,17 @@ private:
                             if(dist.find(word) == dist.end()){
                                 dist[word] = current_dist+1;
                                 q.push(word);
-                                visited_lev.insert(word);
+                                dict.erase(word);
                             }
                         }
                     }
                     word[i] = originalChar;
                 }
             }
-            for(auto w:visited_lev) dict.erase(w);
-            visited_lev.clear();
         }
     }
-
 public:
-//To completely eliminate dead ends and pass all test cases, we must run the DFS backwards from endWord to beginWord. Since every step backward decreases the distance to beginWord by exactly 1, every single path explored is guaranteed to be a valid shortest path.
+    //To completely eliminate dead ends and pass all test cases, we must run the DFS backwards from endWord to beginWord. Since every step backward decreases the distance to beginWord by exactly 1, every single path explored is guaranteed to be a valid shortest path.
     void DFS(string beginWord, string endWord, unordered_set<string> & dict,int &slen,int currlen,vector<string> &path,vector<vector<string>> & ans,unordered_map<string,int> & dist){
         if(beginWord==endWord) {
             vector<string> r=path;
@@ -47,7 +41,7 @@ public:
             ans.push_back(r);
             return;
         }
-         string temp = beginWord;
+        string temp = beginWord;
         for(int i = 0; i < temp.size(); i++){
             char original = temp[i];
             //all combination of letters from a-z to create the word in list
@@ -63,7 +57,6 @@ public:
             temp[i] = original;
         }
     }
-
     vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
         unordered_map<string,int> dist;
         ladderLength(beginWord,endWord,wordList,dist);
