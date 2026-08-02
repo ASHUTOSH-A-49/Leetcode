@@ -10,16 +10,18 @@ public:
         dist[0][0] = 0; 
         parent[0][0] = {0,0}; 
         
-        set<pair<int,pair<int,int>>> st; 
-        st.insert({0, {0, 0}}); 
+        priority_queue<pair<int, pair<int, int>>, 
+                       vector<pair<int, pair<int, int>>>, 
+                       greater<pair<int, pair<int, int>>>> st; 
+        st.push({0, {0, 0}}); 
         
         int drow[] = {-1,1,0,0}; 
         int dcol[] = {0,0,-1,1}; 
         
         while(!st.empty()){ 
-            auto p = *st.begin(); 
+            auto p = st.top(); 
             int d = p.first, r = p.second.first, c = p.second.second; 
-            st.erase(st.begin()); 
+            st.pop(); 
             
             if (d > dist[r][c]) continue; 
             
@@ -28,17 +30,13 @@ public:
                 int nc = c + dcol[i]; 
                 
                 if(nr >= 0 && nc >= 0 && nr < n && nc < m) { 
-                    int edgeEffort = abs(heights[r][c] - heights[nr][nc]); 
-                    int newEffort = max(d, edgeEffort); 
+                    int d1 = abs(heights[r][c] - heights[nr][nc]); 
+                    int d2 = max(d, d1); 
                     
-                    if(newEffort < dist[nr][nc]) { 
-                        if(dist[nr][nc] != 1e7){ 
-                            st.erase({dist[nr][nc], {nr, nc}}); 
-                        } 
-                        
-                        dist[nr][nc] = newEffort; 
+                    if(d2 < dist[nr][nc]) { 
+                        dist[nr][nc] = d2; 
                         parent[nr][nc] = {r, c}; 
-                        st.insert({newEffort, {nr, nc}}); 
+                        st.push({d2, {nr, nc}}); 
                     } 
                 } 
             } 
@@ -69,7 +67,7 @@ public:
             r1 = r2; 
             c1 = c2; 
         } 
-        return maxd; 
+        return maxd;
 
     }
 };
