@@ -1,6 +1,6 @@
 class Solution {
 public:
-    
+    // DIJKSTRA's approach
     int minimumEffortPath(vector<vector<int>>& heights) {
 
         int n = heights.size(), m = heights[0].size(); 
