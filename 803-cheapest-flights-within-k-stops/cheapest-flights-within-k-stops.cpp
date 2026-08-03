@@ -19,14 +19,11 @@ public:
             st.erase(st.begin());
             if(node==dst)return d;
             for(auto [d2,i]:G[node]){
-                if(d+d2 < dist[i][0]){
-                    if(stop+1<=k){
+                if(stop+1<=k){
                     if(d+d2<dist[i][stop+1]){
                         dist[i][stop+1]=d+d2;
                         st.insert({d+d2,{stop+1,i}});
                     }
-                    }
-                    
                 }
             }
         }
