@@ -1,5 +1,6 @@
 class Solution {
 public:
+// DIJKSTRA APPROACH 
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
         vector<vector<pair<int,int>>> G(n);
         for(auto f:flights){
@@ -8,8 +9,8 @@ public:
         }
         set<pair<int,pair<int,int>>> st;
         k++;
-        //sort by price
         vector<vector<int>> dist(n,vector<int>(k+2,1e9));
+        //sort by price
         st.insert({0,{0,src}});
         dist[src][0]=0;
         while(!st.empty()){
@@ -19,6 +20,7 @@ public:
             st.erase(st.begin());
             if(node==dst)return d;
             for(auto [d2,i]:G[node]){
+                //CORE LOGIC: only proceed if within k allowed stops
                 if(stop+1<=k){
                     if(d+d2<dist[i][stop+1]){
                         dist[i][stop+1]=d+d2;
