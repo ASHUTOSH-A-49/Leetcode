@@ -1,44 +1,38 @@
 class Solution {
 public:
-//DIJKSTRA's approach
+//Floyd Warshall's approach
     int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-        int k = distanceThreshold;
-        vector<vector<pair<int,int>>> G(n);
+        int dis = distanceThreshold;
+        vector<vector<int>> G(n,vector<int>(n,1e9));
         for(auto e:edges){
             int u = e[0],v = e[1],w = e[2];
-            G[u].push_back({v,w});
-            G[v].push_back({u,w});
+            G[u][v] = w;
+            G[v][u] = w;
         }
-        set<pair<int,int>> val; //city,node
         for(int i = 0;i<n;i++){
-            vector<int> dist(n,1e9);
-            set<pair<int,int>> st; //{dist,node}
-            dist[i] = 0;
-            st.insert({0,i});
-            while(!st.empty()){
-                auto [d,u] = *st.begin();
-                st.erase(st.begin());
-                for(auto [v,d2]:G[u]){
-                    if(d+d2<dist[v]){
-                        if(dist[v]!=1e9) st.erase({dist[v],v});
-                        dist[v] = d+d2;
-                        st.insert({dist[v],v});
+            G[i][i] = 0;
+        }
+        
+        for(int k = 0;k<n;k++){
+            //via k
+            for(int i = 0;i<n;i++){
+                for(int j = 0;j<n;j++){
+                    if (G[i][k] < 1e9 && G[k][j] < 1e9) {
+                        G[i][j] = min(G[i][j], G[i][k] + G[k][j]);
                     }
                 }
             }
-            int city = 0;
-            for(int c = 0;c<n;c++){
-                if(c==i) continue;
-                if(dist[c]<=k) city++;
-            }
-            val.insert({city,i});
         }
-        int city = val.begin()->first,node = -1;
-        for(auto [c,n]:val){
-            if(c==city){
-                node = n;
-            }else{
-                break;
+        
+        int node = -1,city = n+1;
+        for(int i = 0;i<n;i++){
+            int cnt = 0;
+            for(int j = 0;j<n;j++){
+                if(G[i][j]<=dis) cnt++;
+            }
+            if(cnt<=city){
+                city = cnt;
+                node = i;
             }
         }
         return node;
