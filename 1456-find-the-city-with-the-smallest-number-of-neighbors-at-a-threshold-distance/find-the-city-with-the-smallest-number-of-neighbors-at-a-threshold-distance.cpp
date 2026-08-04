@@ -1,5 +1,6 @@
 class Solution {
 public:
+//DIJKSTRA's approach
     int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
         int k = distanceThreshold;
         vector<vector<pair<int,int>>> G(n);
