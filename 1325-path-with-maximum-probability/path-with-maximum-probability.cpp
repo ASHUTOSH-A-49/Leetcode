@@ -5,24 +5,24 @@ public:
         vector<vector<pair<int,double>>> G(n);
         for(int i=0;i<edges.size();i++){
             int u=edges[i][0],v=edges[i][1];
-            double p=log(succProb[i]);
+            double p=succProb[i];
             G[u].push_back({v,p});
             G[v].push_back({u,p});
         }
         vector<double> dist(n,-1e9);
         priority_queue<pair<double,int>> q;
-        dist[src]=0;
-        q.push({0,src});
+        dist[src]=1;
+        q.push({1,src});
         while(!q.empty()){
             auto[p,node]=q.top();
             q.pop();
             for(auto[i,p2]:G[node]){
-                if(p+p2>dist[i]){
-                    dist[i]=p+p2;
+                if(p*p2>dist[i]){
+                    dist[i]=p*p2;
                     q.push({dist[i],i});
                 }
             }
         }
-        return (dist[dst]==-1e9)?0:exp(dist[dst]);
+        return (dist[dst]==-1e9)?0:dist[dst];
     }
 };
