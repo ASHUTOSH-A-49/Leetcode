@@ -24,18 +24,19 @@ public:
         }
         // for(bool b:isSusp) cout<<b<<" ";
         // bool check = false;
-        vector<int> visited(n,false);
+        vector<int> visited(n,0);
         bool check  = false;
         for(int i = 0; i < n; i++){
             if(isSusp[i]) continue;
             if(visited[i]) continue;
-            visited[i] = true; 
+            visited[i] = 1; 
             for(int u : G[i]){
                 if(isSusp[u]) {
                     check = true;
                     break;
                 }
             }
+            if(check) break;
         }
         if(check){
             for(int i = 0;i<n;i++) ans.push_back(i);
