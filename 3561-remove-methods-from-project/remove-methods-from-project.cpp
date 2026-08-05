@@ -1,22 +1,6 @@
 class Solution {
 public:
-    int BFS(vector<vector<int>> & G,vector<int> & visited,vector<bool> & isSusp,int root){
-        if(visited[root]) return 0;
-        queue<int> q;
-        q.push(root);
-        while(!q.empty()){
-            int node= q.front();
-            q.pop();
-            for(int i:G[node]){
-                if(visited[i]) continue;
-                if(isSusp[i]) return 1;
-                q.push(i);
-                visited[i] = 1;
-            }
-        }
-        return 0;
-        
-    }
+
     vector<int> remainingMethods(int n, int k, vector<vector<int>>& invocations) {
         vector<int> ans;
         vector<vector<int>> G(n);
@@ -40,13 +24,17 @@ public:
         }
         // for(bool b:isSusp) cout<<b<<" ";
         // bool check = false;
-        vector<int> visited(n,0);
+        vector<int> visited(n,false);
         bool check  = false;
-        for(int i = 0;i<n;i++){
+        for(int i = 0; i < n; i++){
             if(isSusp[i]) continue;
-            if(BFS(G,visited,isSusp,i)) {
-                check = true;
-                break;
+            if(visited[i]) continue;
+            visited[i] = true; 
+            for(int u : G[i]){
+                if(isSusp[u]) {
+                    check = true;
+                    break;
+                }
             }
         }
         if(check){
