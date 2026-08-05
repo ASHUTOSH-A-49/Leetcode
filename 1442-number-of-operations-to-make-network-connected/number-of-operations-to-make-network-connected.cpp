@@ -37,12 +37,14 @@ public:
 class Solution {
 public:
     int makeConnected(int n, vector<vector<int>>& connections) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
         if(connections.size()<n-1) return -1;
         DSU ds(n);
         for(auto v:connections){
             ds.unionByRank(v[0],v[1]);
         }
-
+        //map approach
         unordered_map<int,int> mp;
         for(int i = 0;i<n;i++){
             int pu = ds.findUpar(i);
