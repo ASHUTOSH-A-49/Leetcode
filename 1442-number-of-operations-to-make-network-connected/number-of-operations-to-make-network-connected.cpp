@@ -44,15 +44,13 @@ public:
         for(auto v:connections){
             ds.unionByRank(v[0],v[1]);
         }
-        //map approach
-        unordered_map<int,int> mp;
-        for(int i = 0;i<n;i++){
-            int pu = ds.findUpar(i);
-            if(mp.count(pu)>0){
-                continue;
+        //counter approach (optimised space)
+        int components = 0;
+        for (int i = 0; i < n; i++) {
+            if (ds.findUpar(i) == i) {
+                components++;
             }
-            mp[pu]++;
         }
-        return mp.size()-1;
+        return components - 1;
     }
 };
