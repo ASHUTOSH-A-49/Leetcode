@@ -3,9 +3,9 @@ public:
     vector<int> rank,size,par;
     DSU(int n){
         rank.assign(n+1,0);
-        size.assign(n+1,1);
+        size.assign(n,1); 
         par.assign(n+1,0);
-        for(int i = 0;i<=n;i++) par[i] = i; //0 based
+        for(int i = 0;i<n;i++) par[i] = i; //0 based
         
 
     }
