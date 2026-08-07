@@ -69,7 +69,7 @@ public:
             ds.unionBySize(rnode,colnode);
         }
         int components = 0;
-        for (int i = 0; i < siz; i++) {
+        for (int i = 0; i <= siz; i++) {
             if(vis[i]){
                 if (ds.findUpar(i) == i) {
                 components++;
