@@ -31,7 +31,7 @@ public:
                 }
             }    
         }
-        for(int i:ans) cout<<i<<" ";
+        // for(int i:ans) cout<<i<<" ";
         vector<int> dummy;
         return (j==n)?ans:dummy;
     }
