@@ -8,7 +8,10 @@ public:
             for(int j = 1;j*j<=i;j++){
                 int sq = j*j;
                 // if after removing sq stones, the state ends in a losing state then we declare current state to be winning state
-                if(!dp[i-sq]) dp[i] = true;
+                if(!dp[i-sq]) {
+                    dp[i] = true;
+                    break;
+                }
             }
         }
         return dp[n];
