@@ -1,19 +1,15 @@
 class Solution {
 public:
-    int arob(int i,vector<int>& nums,vector<int> & memo){
-        int n= nums.size();
-        if(i>=n) return 0;
-        if(memo[i]!=-1){
-            return memo[i];
-        }
-        int pick = nums[i] + arob(i + 2, nums, memo);
-        int skip = 0 + arob(i + 1, nums, memo);
-        return memo[i] = max(pick, skip);
-        
-    }
+    //tabulation approach
     int rob(vector<int>& nums) {
         int n = nums.size();
-        vector<int> memo(n+1,-1);
-        return arob(0,nums,memo);
+        vector<int> dp(n,-1);
+        if(n==1) return nums[0];
+        dp[0] = nums[0];
+        dp[1]= max(nums[0],nums[1]);
+        for(int i = 2;i<n;i++){
+            dp[i] = max(dp[i-1],dp[i-2]+nums[i]);
+        }
+        return dp[n-1];
     }
 };
