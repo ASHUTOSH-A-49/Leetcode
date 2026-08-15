@@ -19,14 +19,18 @@ int solve(int idx,int xorval,vector<int> & nums){
         //edge case all 0 in the array
         int checknat = 0;
         int n = nums.size();
+        int xorval = 0;
         for(int i = 0;i<n;i++){
             if(nums[i]>0) {
                 checknat = 1;
-                break;
             }
+            xorval = xorval^nums[i];
         }
         if(!checknat) return 0;
-        memset(dp,-1,sizeof(dp));
-        return solve(0,0,nums);
+        if(xorval==0) return n-1;
+        return n;
+        // if(!checknat) return 0;
+        // memset(dp,-1,sizeof(dp));
+        // return solve(0,0,nums);
     }
 };
