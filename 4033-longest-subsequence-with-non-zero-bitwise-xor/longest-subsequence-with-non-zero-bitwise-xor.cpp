@@ -16,6 +16,7 @@ int solve(int idx,int xorval,vector<int> & nums){
     return dp[idx] = max(take,skip);
 }
     int longestSubsequence(vector<int>& nums) {
+        //edge case all 0 in the array
         int checknat = 0;
         int n = nums.size();
         for(int i = 0;i<n;i++){
