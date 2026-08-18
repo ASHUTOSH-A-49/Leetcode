@@ -6,8 +6,8 @@ public:
         if(n==1) return 0;
         int maxlen = 0;
         for(int i = 0;i<n;i++){
-            map<int,int> evenhash;
-            map<int,int> oddhash;
+            unordered_map<int,int> evenhash;
+            unordered_map<int,int> oddhash;
             for(int j = i;j<n;j++){
                 if(nums[j]%2==0) evenhash[nums[j]]++;
                 else oddhash[nums[j]]++;
