@@ -10,8 +10,8 @@ int solve(int i, vector<int> & pre,int n){
     return dp[i] = max(take,skip);
 }
     int stoneGameVIII(vector<int>& stones) {
-        // ios_base::sync_with_stdio(false);
-        // cin.tie(NULL);
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
         memset(dp,-1,sizeof(dp));
         int n = stones.size();
         vector<int> nums;
