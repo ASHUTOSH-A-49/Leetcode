@@ -3,21 +3,20 @@ public:
    bool sumGame(string num) {
         int n = num.size();
 
-        auto get = [](string&& s) -> pair<int, int> {
-            int nn = 0, qq = 0;
-            for (char ch : s) {
-                if (ch == '?') {
-                    ++qq;
-                } else {
-                    nn += (ch - '0');
-                }
+        int lsum = 0,rsum = 0,lq = 0,rq = 0;
+        int mid = n/2;
+        for(int i = 0;i<n;i++){
+            char c = num[i];
+            if(i<mid){
+                (c=='?')? lq++:lsum+=(c-'0');
+            }else{
+                (c=='?')? rq++:rsum+=(c-'0');
             }
-            return {nn, qq};
-        };
-
-        auto [n0, q0] = get(num.substr(0, n / 2));
-        auto [n1, q1] = get(num.substr(n / 2, n / 2));
-
-        return ((q0 + q1) % 2 == 1) || (n0 - n1 != (q1 - q0) * 9 / 2);
+        }
+        if((lq+rq)&1) return true;
+        int left = 2*lsum + 9*lq;
+        int right = 2*rsum+9*rq;
+        //for bob to win left == right;
+        return (!(left==right));
     }
 };
