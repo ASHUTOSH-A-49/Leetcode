@@ -13,9 +13,12 @@ public:
                 (c=='?')? rq++:rsum+=(c-'0');
             }
         }
+        // for one side due to question marks : (x+9-x + y+9-y ) = 18 for 4 q mark om one side
+        // i.e. one ques mark weights 18/4  = 4.5
+        // therefore for one side sum = known sum (lsum or rsum) + 4.5 * no of ques 
         if((lq+rq)&1) return true;
-        int left = 2*lsum + 9*lq;
-        int right = 2*rsum+9*rq;
+        int left = lsum + 4.5*lq;
+        int right = rsum+4.5*rq;
         //for bob to win left == right;
         return (!(left==right));
     }
