@@ -1,19 +1,19 @@
 class Solution {
 public:
-//tabulation (BOTTOM-UP) approach
+//tabulation (BOTTOM-UP) approach with space optimis.n
     int uniquePaths(int m, int n) {
-        int dp[m][n];
-        dp[m-1][n-1] = 1;
+        vector<int> dp(n,0);
+        dp[n-1] = 1;
         for(int i = m-1;i>=0;i--){
             for(int j = n-1;j>=0;j--){
-                if(i==m-1 && j==n-1 ) continue;
-                int d = 0,r = 0;
-                if(i+1<m) d = dp[i+1][j];
-                if(j+1<n) r = dp[i][j+1];
-                dp[i][j] = d+r;
+                if(i==m-1 && j==n-1) continue;
+                int r = 0,d = 0;
+                if(j!=n-1) r = dp[j+1]; //holds fresh updated curr vec right
+                d = dp[j]; //holds stale down vec values
+                dp[j] = r+d;
             }
         }
-        return dp[0][0];
+        return dp[0];
         
     }
 };
