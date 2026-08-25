@@ -11,9 +11,11 @@ int BSFind(vector<int> & nums,int target){
     return ans;
 }
     int missingMultiple(vector<int>& nums, int k) {
-        sort(nums.begin(),nums.end());
-        for(int m = 1;m<=100;m++){
-            if(BSFind(nums,m*k)==-1) return m*k;
+        // hashmap approach 
+        unordered_map<int,int> mp;
+        for(int i:nums) mp[i]++;
+        for(int i = 1;i<=100;i++){
+            if(mp.count(i*k)==0) return i*k;
         }
         return k*101;
     }
