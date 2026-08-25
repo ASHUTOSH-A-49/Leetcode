@@ -9,12 +9,10 @@ public:
         for(int i = 0;i<n;i++){
             dp[i] = triangle[n-1][i];
         }
-        int siz = n-2;
         for(int i = n-2;i>=0;i--){
-            for(int j = 0;j<=siz;j++){
+            for(int j = 0;j<=i;j++){
                 dp[j] = triangle[i][j]+min(dp[j],dp[j+1]);
             }
-            siz--;
         }
         return dp[0];
     }
