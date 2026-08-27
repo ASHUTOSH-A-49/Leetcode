@@ -5,7 +5,7 @@ public:
         ios_base::sync_with_stdio(false);
         cin.tie(NULL);
         int n = g.size(),m = g[0].size();
-        vector<vector<vector<int>>> dp(n,vector<vector<int>>(m,vector<int>(m)));
+        vector<vector<vector<int>>> dp(n,vector<vector<int>>(m,vector<int>(m,-1)));
         int ans = 0;
         for(int i = n-1;i>=0;i--){
             
@@ -15,7 +15,7 @@ public:
                         if(j1==j2) dp[i][j1][j2] = g[i][j1];
                         else dp[i][j1][j2] = g[i][j1]+g[i][j2];
                     }else{
-                        int rmax = 0;
+                        int rmax = -1;
                         for(int dj1 = -1;dj1<2;dj1++){
                             for(int dj2 = -1;dj2<2;dj2++){
                                 int c1 = j1+dj1,c2 = j2+dj2;
