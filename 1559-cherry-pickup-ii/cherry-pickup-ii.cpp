@@ -2,6 +2,8 @@ class Solution {
 public:
 // Tabulation -BOTTOM UP 
     int cherryPickup(vector<vector<int>>& g) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
         int n = g.size(),m = g[0].size();
         vector<vector<vector<int>>> dp(n,vector<vector<int>>(m,vector<int>(m)));
         int ans = 0;
