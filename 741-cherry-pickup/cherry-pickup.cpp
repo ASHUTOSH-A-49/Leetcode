@@ -32,6 +32,8 @@ int solve(vector<vector<int>> &g,int r1,int c1,int r2,int n){
     return dp[r1][c1][r2] = cherries+max({f1,f2,f3,f4});
 }
     int cherryPickup(vector<vector<int>>& g) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
         memset(dp,-1,sizeof(dp));
         int n = g.size(); 
         int ans = solve(g,0,0,0,n); //start both robo from 0,0
