@@ -11,30 +11,38 @@
 class Solution {
 public:
     vector<int> nodesBetweenCriticalPoints(ListNode* head) {
-        
-        vector<int> arr;
+        // better approach (traversing and find idx and store directly into cp  vec)
+        vector<int> cp;
+        int maxi = 0,mini = 1e5,idx = 0,prev= 0;
         ListNode* ptr = head;
         while(ptr){
-            arr.push_back(ptr->val);
-            ptr = ptr->next;
-        }
-        int n = arr.size();
-        int maxi = 0,mini = n;
-        vector<int> cp;
-        for(int i = 1;i<n-1;i++){
-            if((arr[i]>arr[i+1] && arr[i]>arr[i-1]) || 
-                (arr[i]<arr[i+1] && arr[i] < arr[i-1])){
-                    cp.push_back(i);
+            if(idx==0 || ptr->next==nullptr) {
+                prev = ptr->val;
+                
+                
+            }
+            else if((ptr->val > prev && ptr->val > ptr->next->val) ||
+                (ptr->val < prev && ptr->val < ptr->next->val)) {
+                    // cout<<prev<<" "<<ptr->val<<" "<<ptr->next->val<<endl;
+                    cp.push_back(idx);
+                    prev = ptr->val;
+                    
                 }
+            prev = ptr->val;
+            ptr= ptr->next;
+            idx++;
+            
+            
         }
-        if(cp.size()<=1) return {-1,-1};
+        if(cp.size() <=1) return {-1,-1};
         int m = cp.size();
+        maxi = cp[m-1]-cp[0];
         // for(int i:cp) cout<<i<<" ";
-        for(int i = 0;i<m-1;i++){
+        for(int i =0;i<m-1;i++){
             mini = min(mini,cp[i+1]-cp[i]);
         }
-        maxi = cp[m-1]-cp[0];
         return {mini,maxi};
+        
         
     }
 };
