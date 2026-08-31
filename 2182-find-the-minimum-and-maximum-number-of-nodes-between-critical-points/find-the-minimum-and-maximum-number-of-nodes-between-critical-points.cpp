@@ -11,21 +11,23 @@
 class Solution {
 public:
     vector<int> nodesBetweenCriticalPoints(ListNode* head) {
-        // better approach (traversing and find idx and store directly into cp  vec)
-        vector<int> cp;
-        int maxi = 0,mini = 1e5,idx = 0,prev= 0;
+        // Optimal - No aux space used
+        int maxi = 0,mini = 1e6,idx = 0,prev= 0,prevcp = -1,firstcp = -1;
         ListNode* ptr = head;
         while(ptr){
             if(idx==0 || ptr->next==nullptr) {
                 prev = ptr->val;
                 
-                
             }
             else if((ptr->val > prev && ptr->val > ptr->next->val) ||
                 (ptr->val < prev && ptr->val < ptr->next->val)) {
-                    // cout<<prev<<" "<<ptr->val<<" "<<ptr->next->val<<endl;
-                    cp.push_back(idx);
-                    prev = ptr->val;
+                    if(prevcp==-1){
+                        firstcp = idx;
+                        prevcp = idx;
+                    }else{
+                        mini = min(idx-prevcp,mini);
+                        prevcp = idx;
+                    }
                     
                 }
             prev = ptr->val;
@@ -34,13 +36,8 @@ public:
             
             
         }
-        if(cp.size() <=1) return {-1,-1};
-        int m = cp.size();
-        maxi = cp[m-1]-cp[0];
-        // for(int i:cp) cout<<i<<" ";
-        for(int i =0;i<m-1;i++){
-            mini = min(mini,cp[i+1]-cp[i]);
-        }
+        if(firstcp==-1 || firstcp==prevcp) return {-1,-1};
+        maxi = prevcp-firstcp;
         return {mini,maxi};
         
         
