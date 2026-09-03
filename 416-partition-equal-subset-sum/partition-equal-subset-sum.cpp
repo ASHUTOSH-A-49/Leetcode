@@ -1,4 +1,4 @@
-int dp[201][200001];
+int dp[201][20001];
 class Solution {
 public:
 
@@ -16,8 +16,6 @@ public:
         
     }
     bool canPartition(vector<int>& nums) {
-        ios_base::sync_with_stdio(false);
-        cin.tie(nullptr);
         memset(dp,-1,sizeof(dp));
         int n = nums.size();
         int tot = 0;
