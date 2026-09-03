@@ -16,6 +16,8 @@ public:
         
     }
     bool canPartition(vector<int>& nums) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(nullptr);
         memset(dp,-1,sizeof(dp));
         int n = nums.size();
         int tot = 0;
