@@ -1,27 +1,35 @@
-int dp[201][20001];
+
 class Solution {
 public:
-
-    int solve(int idx, vector<int> & arr,int &n, int sum,int &tot){
-        if(sum> tot/2) return false;
-        if(sum*2==tot) return true;
-        if(idx==n-1) {
-            if((sum+arr[idx])*2 == tot) return true;
-            return false;
-        }
-        if(dp[idx][sum]!=-1) return dp[idx][sum];
-        bool take = solve(idx+1,arr,n,sum+arr[idx],tot);
-        bool skip = solve(idx+1,arr,n,sum,tot);
-        return dp[idx][sum] = take || skip;
-        
-    }
+//TABULATION WITH SPACE OPT
     bool canPartition(vector<int>& nums) {
-        ios_base::sync_with_stdio(false);
-        cin.tie(nullptr);
-        memset(dp,-1,sizeof(dp));
-        int n = nums.size();
         int tot = 0;
         for(int i:nums) tot+=i;
-        return solve(0,nums,n,0,tot);
+        if(tot&1) return false;
+        int sum = tot/2;
+
+        int n = nums.size();
+        vector<bool> dp(sum + 1, false);
+
+        dp[0] = true;
+
+        if (nums[n-1] <= sum) {
+            dp[nums[n-1]] = true;
+        }
+
+        for (int idx = n - 2; idx >= 0; idx--) {
+            for (int t = sum; t >= 1; t--) {
+                bool skip = dp[t];
+                bool take = false;
+
+                if (nums[idx] <= t) {
+                    take = dp[t - nums[idx]];
+                }
+
+                dp[t] = take || skip;
+            }
+        }
+
+        return dp[sum];
     }
 };
