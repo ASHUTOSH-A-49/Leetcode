@@ -1,5 +1,6 @@
 class Solution {
 public:
+//memoization solution
 int dp[12][10001];
     int solve(int idx,vector<int> & coins, int target, int &n){
         if(idx==n){
