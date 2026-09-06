@@ -18,8 +18,6 @@ public:
     }
     int minCost(vector<vector<int>>& grid, int k) {
         //l = 1,r = 2,u = 3,d = 4;
-        ios_base::sync_with_stdio(false);
-        cin.tie(NULL);
         if(k>75) k = 75;
         memset(dp,-1,sizeof(dp));
         int m = grid.size(), n = grid[0].size();
