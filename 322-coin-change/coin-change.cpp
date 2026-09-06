@@ -1,22 +1,21 @@
 class Solution {
 public:
-//memoization solution
-int dp[12][10001];
-    int solve(int idx,vector<int> & coins, int target, int &n){
-        if(idx==n){
-            return (target==0)? 0 : 1e6;
-        }
-        if(target<0) return 1e6;
-        if(dp[idx][target]!=-1) return dp[idx][target];
-        int take = 1+solve(idx,coins,target-coins[idx],n);
-        int skip = solve(idx+1,coins,target,n);
-        return dp[idx][target]=min(take,skip);
-    }
+//TABULATION (BOTTOM - UP)
     int coinChange(vector<int>& coins, int amount) {
-        memset(dp,-1,sizeof(dp));
-        int n = coins.size();
-       int res= solve(0,coins,amount,n);
-       return (res==1e6) ? -1:res;
+       int n = coins.size();
+
+       vector<vector<int>> dp(n+1,vector<int>(amount+1,1e6));
+       //base case;
+       dp[n][0] = 0;
+       for(int idx = n-1;idx>=0;idx--){
+        for(int t = 0;t<=amount;t++){
+            int skip = dp[idx+1][t];
+            int take = 1e6;
+            if(t>=coins[idx]) take =1+ dp[idx][t-coins[idx]];
+            dp[idx][t] = min(take,skip);
+        }
+       }
+       return (dp[0][amount]>=1e6)?-1 : dp[0][amount];
 
     }
 };
