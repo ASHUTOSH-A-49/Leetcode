@@ -1,23 +1,32 @@
 class Solution {
 public:
-//TABULATION (BOTTOM UP) with SPACE OPTIMIZ'N
-    int findTargetSumWays(vector<int>& nums, int target) {
-        int n = nums.size();
-        vector<int> dp(2001, 0);
+//COUNT PARTITION WITH DIFF D PATTERN
+
+int countPartitions(vector<int>& arr, int diff) {
+        // Code here
+        int n = arr.size();
+        int tot = 0;
+        for(int i:arr) tot+=i;
+        if(tot<abs(diff) || (tot+diff)&1) return 0;
+        int target = (tot+diff)/2;
         
-        dp[0+1000] = 1; //sum  = 0 base case
-        
-        for (int i = n - 1; i >= 0; i--) {
-            vector<int> next_dp(2001, 0);
-            for (int s = 1000; s >= -1000; s--) {
-                int sub = 0, add = 0;
-                if (s - nums[i] >= -1000) sub = dp[s - nums[i] + 1000];
-                if (s + nums[i] <= 1000)  add = dp[s + nums[i] + 1000];
-                next_dp[s + 1000] = sub + add;
+        vector<int>dp (target+1,0);
+        //base case
+        dp[0] = 1;
+        if(arr[n-1]<=target) dp[arr[n-1]]++;
+        for(int idx = n-2;idx>=0;idx--){
+            for(int t = target;t>=0;t--){
+                int take = 0;
+                if(arr[idx]<=t) take = dp[t-arr[idx]];
+                int skip = dp[t];
+                dp[t] = skip+take;
             }
-            dp = move(next_dp);
         }
-        return dp[target+1000];
+
+        return dp[target];
+    }
+    int findTargetSumWays(vector<int>& nums, int target) {
+        return countPartitions(nums,target);
 
 
     }
