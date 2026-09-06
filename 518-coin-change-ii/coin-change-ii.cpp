@@ -9,6 +9,7 @@ public:
         for(int idx = n-1;idx>=0;idx--){
             for(int a = 0;a<=amount;a++){
                 unsigned int take = 0;
+                //skip = dp[a]
                 if(a>=coins[idx]) take = dp[a-coins[idx]];
                 dp[a] = take+dp[a];
             }
