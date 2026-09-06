@@ -1,21 +1,23 @@
 class Solution {
 public:
-//TABULATION (BOTTOM UP) 
+//TABULATION (BOTTOM UP) with SPACE OPTIMIZ'N
     int findTargetSumWays(vector<int>& nums, int target) {
         int n = nums.size();
-        vector<vector<int>> dp(n+1, vector<int>(2001, 0));
+        vector<int> dp(2001, 0);
         
-        dp[n][0+1000] = 1;
+        dp[0+1000] = 1; //sum  = 0 base case
         
-        for(int i = n-1;i>=0;i--){
-            for(int s = 1000;s>=-1000;s--){
-                int sub = 0,add = 0;
-                if(s-nums[i]>=-1000)sub = dp[i+1][s-nums[i]+1000];
-                if(s+nums[i] <=1000) add = dp[i+1][s+nums[i]+1000];
-                dp[i][s+1000] = sub+add;
+        for (int i = n - 1; i >= 0; i--) {
+            vector<int> next_dp(2001, 0);
+            for (int s = 1000; s >= -1000; s--) {
+                int sub = 0, add = 0;
+                if (s - nums[i] >= -1000) sub = dp[s - nums[i] + 1000];
+                if (s + nums[i] <= 1000)  add = dp[s + nums[i] + 1000];
+                next_dp[s + 1000] = sub + add;
             }
+            dp = move(next_dp);
         }
-        return dp[0][target+1000];
+        return dp[target+1000];
 
 
     }
