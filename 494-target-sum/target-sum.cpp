@@ -1,20 +1,21 @@
 class Solution {
 public:
-    int solve(vector<vector<int>> &memo, int target, vector<int> &nums, int i, int sum) {
-        if (i == nums.size()) {
-            return (sum == target) ? 1 : 0;
-        }
-        if (memo[i][sum + 1000] != -1) {
-            return memo[i][sum + 1000];
-        }
-        int take = solve(memo, target, nums, i + 1, sum + nums[i]);
-        int nott = solve(memo, target, nums, i + 1, sum - nums[i]);
-        return memo[i][sum + 1000] = take + nott;
-    }
-
     int findTargetSumWays(vector<int>& nums, int target) {
         int n = nums.size();
-        vector<vector<int>> memo(n, vector<int>(2001, -1));
-        return solve(memo, target, nums, 0, 0);
+        vector<vector<int>> dp(n+1, vector<int>(2001, 0));
+        
+        dp[n][1000] = 1;
+        
+        for(int i = n-1;i>=0;i--){
+            for(int s = 1000;s>=-1000;s--){
+                int sub = 0,add = 0;
+                if(s-nums[i]>=-1000)sub = dp[i+1][s-nums[i]+1000];
+                if(s+nums[i] <=1000) add = dp[i+1][s+nums[i]+1000];
+                dp[i][s+1000] = sub+add;
+            }
+        }
+        return dp[0][target+1000];
+
+
     }
 };
