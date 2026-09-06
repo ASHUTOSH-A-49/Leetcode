@@ -1,10 +1,11 @@
 class Solution {
 public:
+//TABULATION (BOTTOM UP) 
     int findTargetSumWays(vector<int>& nums, int target) {
         int n = nums.size();
         vector<vector<int>> dp(n+1, vector<int>(2001, 0));
         
-        dp[n][1000] = 1;
+        dp[n][0+1000] = 1;
         
         for(int i = n-1;i>=0;i--){
             for(int s = 1000;s>=-1000;s--){
