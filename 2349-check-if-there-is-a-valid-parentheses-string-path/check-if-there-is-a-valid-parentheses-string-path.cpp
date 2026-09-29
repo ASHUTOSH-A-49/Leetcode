@@ -15,6 +15,8 @@ vector<vector<vector<int>>> dp;
         return dp[i][j][l] = (d | r);
     }
     bool hasValidPath(vector<vector<char>>& grid) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
         if(grid[0][0]==')') return false;
         int m = grid.size(),n = grid[0].size();
         int k = m+n;
