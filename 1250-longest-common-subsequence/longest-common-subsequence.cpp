@@ -1,5 +1,6 @@
 class Solution {
 public:
+// memoization technique 
 vector<vector<int>> dp;
 int solve(int i,int j,string & s1,string & s2){
     if(i<0 || j<0) return 0;
