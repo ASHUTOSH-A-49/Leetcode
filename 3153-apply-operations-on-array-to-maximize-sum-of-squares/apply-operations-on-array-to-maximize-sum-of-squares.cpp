@@ -16,6 +16,8 @@ int MOD = 1e9+7;
     }
 
     int maxSum(vector<int>& nums, int l) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
         vector<int> bits(32,0);
         for(int i:nums){ //----------O(n*(31+log2(n)))
             intoBits(i,bits);
