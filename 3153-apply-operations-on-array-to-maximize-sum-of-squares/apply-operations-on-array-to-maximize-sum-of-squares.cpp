@@ -61,9 +61,7 @@ int MOD = 1e9+7;
                 int mini1 = min(mini,l);
                 for (int j = 0; j <= i; j++) {
                     bits[j] -= mini1;
-                    if (mini1 > 0) {
-                        num = (num + k) % MOD;
-                    }
+                    num = (num + k) % MOD;
                     k = (k * 2) % MOD; 
                 }
                 long long sq = (num*num)%MOD;
