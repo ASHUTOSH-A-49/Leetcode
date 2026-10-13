@@ -1,28 +1,15 @@
 class Solution {
 public:
-// O(nlogn) approach
+// O(n) approach - quickselect or nth element (partial sort nth element such that all to left of it <=nth element and to right of it are > nth element)
     long long maxAlternatingSum(vector<int>& nums) {
         int n=nums.size();
-        long long ans=0;
         for(int i=0;i<n;i++){
-            nums[i]=abs(nums[i]);
+            nums[i]=nums[i]*nums[i];
         }
-        sort(nums.begin(),nums.end(), greater<int>());
-        if(n&1){
-            for(int i=0;i<=n/2;i++){
-                ans+= nums[i]*nums[i];
-            }
-            for(int i=n/2+1;i<n;i++){
-                ans-=nums[i]*nums[i];
-            }
-        }else{
-            for(int i=0;i<n/2;i++){
-                ans+= nums[i]*nums[i];
-            }
-            for(int i=n/2;i<n;i++){
-                ans-=nums[i]*nums[i];
-            }
-        }
-        return ans;
+        nth_element(begin(nums),begin(nums)+n/2,end(nums));// or use quick select to partial sort
+        long long left = accumulate(begin(nums),begin(nums)+n/2,0LL);
+        long long right = accumulate(begin(nums)+n/2,end(nums),0LL);
+        return right-left;
+
     }
 };
