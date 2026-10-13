@@ -1,5 +1,6 @@
 class Solution {
 public:
+// O(nlogn) approach
     long long maxAlternatingSum(vector<int>& nums) {
         int n=nums.size();
         long long ans=0;
