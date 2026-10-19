@@ -1,5 +1,6 @@
 class Solution {
 public:
+//approach 1 - sorting O(nlgn)
     vector<int> targetIndices(vector<int>& nums, int target) {
         sort(nums.begin(),nums.end());
         vector<int> ans;
