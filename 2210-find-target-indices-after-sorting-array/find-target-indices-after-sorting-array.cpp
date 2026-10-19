@@ -1,13 +1,16 @@
 class Solution {
 public:
-//approach 1 - sorting O(nlgn)
+//approach 2- number < target (start point) and then number = target
+//O(n) approach
     vector<int> targetIndices(vector<int>& nums, int target) {
-        sort(nums.begin(),nums.end());
-        vector<int> ans;
-        int n = nums.size();
-        for(int i=0;i<n;i++){
-            if(nums[i]==target) ans.push_back(i);
+        int cntnum = 0,cntless = -1;
+        for(int i :nums){
+            if(i<target) cntless++;
+            if(i==target) cntnum++;
         }
+        vector<int> ans;
+        for(int i = cntless+1;i<=cntless+cntnum;i++) ans.push_back(i);
         return ans;
+
     }
 };
